@@ -43,9 +43,9 @@ const loadProjects = async () => {
         }
         const data = await response.json();
 
-        // Stockage des données
-        allProjects = data.projects;
-        allTechnologies = data.technologies;
+        const { projects, technologies } = data;
+        allProjects = projects;
+        allTechnologies = technologies;
 
         createFilterButtons();
 
@@ -75,14 +75,12 @@ const createFilterButtons = () => {
         allButton.addEventListener('click', () => filterProjects('all'));
     }
 
-    // Ajout des boutons pour chaque technologie
     allTechnologies.forEach(tech => {
         const button = document.createElement('button');
         button.className = 'filter-btn px-6 py-2 rounded-full font-medium transition-all duration-300 bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-md hover:shadow-lg transform hover:scale-105';
         button.textContent = tech;
         button.setAttribute('data-filter', tech);
 
-        // Événement de clic pour le filtrage
         button.addEventListener('click', () => filterProjects(tech));
 
         filterContainer.appendChild(button);
@@ -106,14 +104,9 @@ const filterProjects = (technology) => {
         }
     });
 
-    // Filtrage des projets
-    let filteredProjects = allProjects;
-
-    if (technology !== 'all') {
-        filteredProjects = allProjects.filter(project =>
-            project.technologies.includes(technology)
-        );
-    }
+    const filteredProjects = technology === 'all'
+        ? allProjects
+        : allProjects.filter(project => project.technologies.includes(technology));
 
     displayProjects(filteredProjects);
 };
@@ -136,69 +129,52 @@ const displayProjects = (projects) => {
     }
 
     projects.forEach(project => {
-        const card = createProjectCard(project);
+        const card = document.createElement('div');
+        card.className = 'project-card bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl';
+
+        const img = document.createElement('img');
+        img.src = project.image;
+        img.alt = `Capture d'écran du projet ${project.title}`;
+        img.className = 'w-full h-48 object-cover';
+        img.loading = 'lazy';
+
+        const content = document.createElement('div');
+        content.className = 'p-6';
+
+        const titleElement = document.createElement('h3');
+        titleElement.className = 'text-xl font-bold text-gray-800 mb-2';
+        titleElement.textContent = project.title;
+
+        const clientElement = document.createElement('p');
+        clientElement.className = 'text-gray-600 mb-4';
+        clientElement.innerHTML = `<span class="font-semibold">Client:</span> ${project.client}`;
+
+        const techContainer = document.createElement('div');
+        techContainer.className = 'flex flex-wrap gap-2 mb-4';
+
+        project.technologies.forEach(tech => {
+            const badge = document.createElement('span');
+            badge.className = 'tech-badge text-xs font-semibold px-3 py-1 rounded-full';
+            badge.textContent = tech;
+            techContainer.appendChild(badge);
+        });
+
+        const button = document.createElement('button');
+        button.className = 'w-full bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300';
+        button.textContent = 'Voir détails';
+        button.setAttribute('aria-label', `Voir les détails du projet ${project.title}`);
+        button.addEventListener('click', () => openModal(project));
+
+        content.appendChild(titleElement);
+        content.appendChild(clientElement);
+        content.appendChild(techContainer);
+        content.appendChild(button);
+
+        card.appendChild(img);
+        card.appendChild(content);
+
         projectsGrid.appendChild(card);
     });
-};
-
-/**
- * Création d'une carte de projet
- * @param {Object} project - Données du projet
- * @returns {HTMLElement} - Élément DOM de la carte
- */
-const createProjectCard = (project) => {
-    const card = document.createElement('div');
-    card.className = 'project-card bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl';
-
-    // Image du projet
-    const img = document.createElement('img');
-    img.src = project.image;
-    img.alt = `Capture d'écran du projet ${project.title}`;
-    img.className = 'w-full h-48 object-cover';
-    img.loading = 'lazy';
-
-    // Contenu de la carte
-    const content = document.createElement('div');
-    content.className = 'p-6';
-
-    // Titre
-    const title = document.createElement('h3');
-    title.className = 'text-xl font-bold text-gray-800 mb-2';
-    title.textContent = project.title;
-
-    // Client
-    const client = document.createElement('p');
-    client.className = 'text-gray-600 mb-4';
-    client.innerHTML = `<span class="font-semibold">Client:</span> ${project.client}`;
-
-    // Technologies 
-    const techContainer = document.createElement('div');
-    techContainer.className = 'flex flex-wrap gap-2 mb-4';
-
-    project.technologies.forEach(tech => {
-        const badge = document.createElement('span');
-        badge.className = 'tech-badge text-xs font-semibold px-3 py-1 rounded-full';
-        badge.textContent = tech;
-        techContainer.appendChild(badge);
-    });
-
-    // Bouton "Voir détails"
-    const button = document.createElement('button');
-    button.className = 'w-full bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300';
-    button.textContent = 'Voir détails';
-    button.setAttribute('aria-label', `Voir les détails du projet ${project.title}`);
-    button.addEventListener('click', () => openModal(project));
-
-    // Assemblage de la carte
-    content.appendChild(title);
-    content.appendChild(client);
-    content.appendChild(techContainer);
-    content.appendChild(button);
-
-    card.appendChild(img);
-    card.appendChild(content);
-
-    return card;
 };
 
 //  Configuration du modal
@@ -233,43 +209,39 @@ const setupModal = () => {
  * Ouverture du modal avec les données du projet
  * @param {Object} project - Données du projet
  */
-const openModal = (project) => {
+const openModal = ({ title, image, client, category, year, duration, description, technologies, features, url }) => {
     const modal = document.getElementById('projectModal');
 
-    // Remplissage des données
-    document.getElementById('modalTitle').textContent = project.title;
-    document.getElementById('modalImage').src = project.image;
-    document.getElementById('modalImage').alt = `Capture d'écran du projet ${project.title}`;
-    document.getElementById('modalClient').textContent = project.client;
-    document.getElementById('modalCategory').textContent = project.category;
-    document.getElementById('modalYear').textContent = project.year;
-    document.getElementById('modalDuration').textContent = project.duration;
-    document.getElementById('modalDescription').textContent = project.description;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalImage').src = image;
+    document.getElementById('modalImage').alt = `Capture d'écran du projet ${title}`;
+    document.getElementById('modalClient').textContent = client;
+    document.getElementById('modalCategory').textContent = category;
+    document.getElementById('modalYear').textContent = year;
+    document.getElementById('modalDuration').textContent = duration;
+    document.getElementById('modalDescription').textContent = description;
 
-    // Technologies
     const techContainer = document.getElementById('modalTechnologies');
     techContainer.innerHTML = '';
-    project.technologies.forEach(tech => {
+    technologies.forEach(tech => {
         const badge = document.createElement('span');
         badge.className = 'tech-badge text-sm font-semibold px-4 py-2 rounded-full';
         badge.textContent = tech;
         techContainer.appendChild(badge);
     });
 
-    // Fonctionnalités
     const featuresList = document.getElementById('modalFeatures');
     featuresList.innerHTML = '';
-    project.features.forEach(feature => {
+    features.forEach(feature => {
         const li = document.createElement('li');
         li.textContent = feature;
         featuresList.appendChild(li);
     });
 
-    document.getElementById('modalLink').href = project.url;
+    document.getElementById('modalLink').href = url;
 
-    // Affichage du modal
     modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Désactivation du scroll
+    document.body.style.overflow = 'hidden';
 
     modal.focus();
 };

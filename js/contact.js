@@ -41,15 +41,11 @@ const setupContactForm = () => {
     }
 };
 
-/**
- * Validation du champ nom
- * @returns {boolean} - True si valide
- */
 const validateName = () => {
     const nameInput = document.getElementById('name');
     const nameError = document.getElementById('nameError');
     const name = nameInput.value.trim();
-    // verification 
+
     if (name === '') {
         showError('name', 'Le nom est requis');
         return false;
@@ -179,12 +175,16 @@ const handleSubmit = (event) => {
     const isMessageValid = validateMessage();
 
     if (isNameValid && isEmailValid && isMessageValid) {
-        // Récupération des données du formulaire
+        const nameValue = document.getElementById('name').value.trim();
+        const emailValue = document.getElementById('email').value.trim();
+        const subjectValue = document.getElementById('subject').value.trim();
+        const messageValue = document.getElementById('message').value.trim();
+
         const formData = {
-            name: document.getElementById('name').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            subject: document.getElementById('subject').value.trim(),
-            message: document.getElementById('message').value.trim()
+            name: nameValue,
+            email: emailValue,
+            subject: subjectValue,
+            message: messageValue
         };
 
         formSuccess.classList.remove('hidden');

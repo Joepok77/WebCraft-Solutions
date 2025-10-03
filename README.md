@@ -62,38 +62,6 @@ L'API retourne un objet JSON contenant :
 - `technologies` : liste des technologies
 - `categories` : liste des catégories
 
-## ✨ Exigences techniques respectées
-
-### HTML5 (C1)
-- ✅ Structure sémantique (`header`, `nav`, `section`, `footer`, `article`)
-- ✅ Attributs ARIA pour l'accessibilité (`aria-label`, `aria-current`, `role`)
-- ✅ Balises `alt` sur toutes les images
-- ✅ Code validé W3C (voir captures d'écran)
-- ✅ Code indenté et commenté
-
-### CSS3 (C2 + C3)
-- ✅ Tailwind CSS pour un développement rapide
-- ✅ Variables CSS personnalisées (couleurs, animations)
-- ✅ Design responsive avec breakpoints mobiles/desktop
-- ✅ Animations CSS avec `@keyframes`
-- ✅ Transitions et effets hover
-- ✅ Grille responsive (Tailwind Grid)
-
-### JavaScript (C4)
-- ✅ ES6+ (const/let, arrow functions, template literals, async/await)
-- ✅ Manipulation du DOM
-- ✅ Gestion des événements (click, submit, blur, input)
-- ✅ Validation de formulaire côté client
-- ✅ Modal fonctionnel avec fermeture multiple (bouton, extérieur, Escape)
-- ✅ Filtrage dynamique par technologie
-- ✅ Animation des compteurs (IntersectionObserver)
-
-### AJAX (C5)
-- ✅ Utilisation de `fetch()` avec async/await
-- ✅ Gestion d'erreur avec `try/catch`
-- ✅ Affichage d'un loader pendant le chargement
-- ✅ Mise à jour dynamique du DOM
-- ✅ Requête asynchrone vers l'API REST
 
 ## 🎨 Fonctionnalités interactives
 
@@ -132,23 +100,12 @@ Adaptation :
 
 ## 🚀 Installation et utilisation
 
-### Méthode 1 : Ouverture directe
+### Ouverture directe
 1. Cloner ou télécharger le repository
 2. Ouvrir `index.html` dans un navigateur moderne
+3. clique droit sur la souris puis allez dans open with live server
 
-### Méthode 2 : Serveur local (recommandé)
-```bash
-# Avec Python
-python -m http.server 8000
 
-# Avec Node.js (http-server)
-npx http-server
-
-# Avec PHP
-php -S localhost:8000
-```
-
-Puis ouvrir : `http://localhost:8000`
 
 ## ✅ Validation W3C
 
@@ -184,10 +141,10 @@ Pour valider le code HTML :
 ## 📝 Notes de développement
 
 ### Choix techniques
-- **Tailwind CSS** : Utilisé pour le design rapide et cohérent (classes utilitaires)
-- **CSS natif (style.css)** : Animations personnalisées @keyframes et effets avancés pour un design unique
+- **Tailwind CSS** : Utilisé pour le design rapide et cohérent 
+- **CSS natif (style.css)** : Animations personnalisées @keyframes et effets avancés pour un design personnalisé 
 - **Fetch API** : Standard moderne natif au navigateur pour les requêtes AJAX (pas Axios car bibliothèque externe interdite)
-- **Async/Await** : Syntaxe ES6+ claire pour le code asynchrone
+- **Async/Await** : Syntaxe claire pour le code asynchrone
 - **IntersectionObserver** : API moderne pour des animations performantes au scroll
 
 ### Optimisations

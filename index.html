@@ -152,7 +152,7 @@
         <a
           href="#portfolio"
           class="inline-block bg-white text-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
-          aria-label="Découvrir nos projets"
+          aria-label="Découvrir nos projets réalisés"
         >
           Découvrir nos projets
         </a>
@@ -160,9 +160,9 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-16">
+    <section id="portfolio" class="py-16" aria-labelledby="portfolio-heading">
       <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">
+        <h2 id="portfolio-heading" class="text-4xl font-bold text-center mb-12 text-gray-800">
           Nos Projets Réalisés
         </h2>
 
@@ -185,7 +185,8 @@
           <div
             class="loader"
             role="status"
-            aria-label="Chargement en cours"
+            aria-label="Chargement des projets en cours"
+            aria-live="polite"
           ></div>
         </div>
 
@@ -206,6 +207,8 @@
         <div
           id="projectsGrid"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          role="list"
+          aria-label="Liste des projets réalisés"
         ></div>
       </div>
     </section>
@@ -229,7 +232,7 @@
             </h3>
             <button
               id="closeModal"
-              class="text-gray-400 hover:text-gray-600 text-3xl font-light transition-colors"
+              class="text-red-500 hover:text-red-700 text-3xl font-light transition-colors"
               aria-label="Fermer la fenêtre"
             >
               &times;
@@ -309,7 +312,7 @@
       </div>
     </div>
 
-    <footer class="bg-gray-800 text-white py-12 mt-20">
+    <footer class="bg-gray-800 text-white py-12 mt-20" role="contentinfo">
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
@@ -321,7 +324,7 @@
 
           <div>
             <h3 class="text-xl font-bold mb-4">Navigation</h3>
-            <ul class="space-y-2">
+            <ul class="space-y-2" aria-label="Navigation du pied de page">
               <li>
                 <a
                   href="index.html"
