@@ -1,0 +1,173 @@
+:root {
+    --primary: #6366F1;      /* Indigo moderne */
+    --secondary: #EC4899;    /* Rose vif */
+    --accent: #14B8A6;       /* Turquoise */
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== ANIMATIONS @KEYFRAMES ===== */
+
+/* Animation de rotation pour le loader */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Animation de montée */
+@keyframes slideUp {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);  /* Indigo */
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(236, 72, 153, 0.7);  /* Rose */
+    }
+}
+
+/* Animation de secousse pour les erreurs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+
+.loader {
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+/* Modal avec flou et fond sombre */
+.modal-backdrop {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Effet lumineux sur les cartes de stats */
+.stat-card:hover {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Animation de secousse sur les champs en erreur */
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+
+
+.project-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    background: #e5e7eb !important; /* Fond gris moyen */
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.project-card:hover::after {
+    opacity: 1;
+}
+
+
+.modal-content {
+    background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%) !important; /* Fond gris foncé */
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.modal-section {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-left: 3px solid var(--accent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-section:hover {
+    transform: translateX(5px);
+    box-shadow: -5px 0 15px rgba(20, 184, 166, 0.2);
+}
+
+/* Badge technologie avec gradient */
+.tech-badge {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+
+
+@media (max-width: 767px) {
+    .loader {
+        width: 40px;
+        height: 40px;
+    }
+
+    .modal-section:hover {
+        transform: translateX(0);
+    }
+}
